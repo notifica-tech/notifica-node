@@ -1,14 +1,18 @@
-import type { NotificaClient } from '../client.js';
-import type { PaginatedResponse, RequestOptions, SingleResponse } from '../types/common.js';
+import type { NotificaClient } from '../client.ts';
+import type { PaginatedResponse, RequestOptions, SingleResponse } from '../types/common.ts';
 import type {
   ListNotificationsParams,
   MessageAttempt,
   Notification,
   SendNotificationParams,
-} from '../types/notifications.js';
+} from '../types/notifications.ts';
 
 export class Notifications {
-  constructor(private readonly client: NotificaClient) {}
+  private readonly client: NotificaClient;
+
+  constructor(client: NotificaClient) {
+    this.client = client;
+  }
 
   /**
    * Envia uma notificação.

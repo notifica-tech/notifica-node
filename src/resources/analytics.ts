@@ -1,5 +1,5 @@
-import type { NotificaClient } from '../client.js';
-import type { RequestOptions } from '../types/common.js';
+import type { NotificaClient } from '../client.ts';
+import type { RequestOptions } from '../types/common.ts';
 import type {
   AnalyticsOverview,
   AnalyticsParams,
@@ -8,10 +8,14 @@ import type {
   TimeseriesParams,
   TimeseriesPoint,
   TopTemplatesParams,
-} from '../types/analytics.js';
+} from '../types/analytics.ts';
 
 export class Analytics {
-  constructor(private readonly client: NotificaClient) {}
+  private readonly client: NotificaClient;
+
+  constructor(client: NotificaClient) {
+    this.client = client;
+  }
 
   /**
    * Métricas gerais (total enviado, entregue, falhas, taxa de entrega).

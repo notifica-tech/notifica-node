@@ -30,8 +30,7 @@
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts --clean",
     "typecheck": "tsc --noEmit",
-    "test": "node --test test/**/*.test.ts",
-    "test:ts": "tsc --noEmit && node --experimental-strip-types --test test/**/*.test.ts",
+    "test": "node --experimental-strip-types --no-warnings --test test/client.test.ts test/resources/notifications.test.ts test/resources/templates.test.ts test/resources/workflows.test.ts test/resources/subscribers.test.ts test/resources/channels.test.ts test/resources/domains.test.ts test/resources/webhooks.test.ts test/resources/api-keys.test.ts test/resources/analytics.test.ts",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
@@ -52,10 +51,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/usenotifica/notifica-node"
+    "url": "https://github.com/notifica-tech/notifica-node.git"
   },
   "homepage": "https://usenotifica.com.br",
   "bugs": {
-    "url": "https://github.com/usenotifica/notifica-node/issues"
+    "url": "https://github.com/notifica-tech/notifica-node/issues"
   }
 }

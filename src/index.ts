@@ -1,13 +1,13 @@
-import { NotificaClient, type NotificaClientConfig } from './client.js';
-import { Notifications } from './resources/notifications.js';
-import { Templates } from './resources/templates.js';
-import { Workflows } from './resources/workflows.js';
-import { Subscribers } from './resources/subscribers.js';
-import { Channels } from './resources/channels.js';
-import { Domains } from './resources/domains.js';
-import { Webhooks } from './resources/webhooks.js';
-import { ApiKeys } from './resources/api-keys.js';
-import { Analytics } from './resources/analytics.js';
+import { NotificaClient, type NotificaClientConfig } from './client.ts';
+import { Notifications } from './resources/notifications.ts';
+import { Templates } from './resources/templates.ts';
+import { Workflows } from './resources/workflows.ts';
+import { Subscribers } from './resources/subscribers.ts';
+import { Channels } from './resources/channels.ts';
+import { Domains } from './resources/domains.ts';
+import { Webhooks } from './resources/webhooks.ts';
+import { ApiKeys } from './resources/api-keys.ts';
+import { Analytics } from './resources/analytics.ts';
 
 /**
  * Cliente oficial do Notifica para Node.js.
@@ -85,7 +85,7 @@ export class Notifica {
 
 // ── Re-exports ──────────────────────────────────────
 
-export { NotificaClient, type NotificaClientConfig } from './client.js';
+export { NotificaClient, type NotificaClientConfig } from './client.ts';
 
 export {
   NotificaError,
@@ -93,17 +93,17 @@ export {
   ValidationError,
   RateLimitError,
   TimeoutError,
-} from './errors.js';
+} from './errors.ts';
 
-export * from './types/index.js';
+export * from './types/index.ts';
 
 // Resource classes (for advanced usage / testing)
-export { Notifications } from './resources/notifications.js';
-export { Templates } from './resources/templates.js';
-export { Workflows } from './resources/workflows.js';
-export { Subscribers } from './resources/subscribers.js';
-export { Channels } from './resources/channels.js';
-export { Domains } from './resources/domains.js';
-export { Webhooks } from './resources/webhooks.js';
-export { ApiKeys } from './resources/api-keys.js';
-export { Analytics } from './resources/analytics.js';
+export { Notifications } from './resources/notifications.ts';
+export { Templates } from './resources/templates.ts';
+export { Workflows } from './resources/workflows.ts';
+export { Subscribers } from './resources/subscribers.ts';
+export { Channels } from './resources/channels.ts';
+export { Domains } from './resources/domains.ts';
+export { Webhooks } from './resources/webhooks.ts';
+export { ApiKeys } from './resources/api-keys.ts';
+export { Analytics } from './resources/analytics.ts';

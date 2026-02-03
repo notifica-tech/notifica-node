@@ -1,5 +1,5 @@
-import type { NotificaClient } from '../client.js';
-import type { PaginatedResponse, RequestOptions, SingleResponse } from '../types/common.js';
+import type { NotificaClient } from '../client.ts';
+import type { PaginatedResponse, RequestOptions, SingleResponse } from '../types/common.ts';
 import type {
   CreateTemplateParams,
   ListTemplatesParams,
@@ -10,10 +10,14 @@ import type {
   UpdateTemplateParams,
   ValidateContentParams,
   ValidationResult,
-} from '../types/templates.js';
+} from '../types/templates.ts';
 
 export class Templates {
-  constructor(private readonly client: NotificaClient) {}
+  private readonly client: NotificaClient;
+
+  constructor(client: NotificaClient) {
+    this.client = client;
+  }
 
   /**
    * Cria um novo template.

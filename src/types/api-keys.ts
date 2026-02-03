@@ -1,4 +1,4 @@
-import type { ApiKeyType, Environment } from './common.js';
+import type { ApiKeyType, Environment } from './common.ts';
 
 // ── Create ──────────────────────────────────────────
 

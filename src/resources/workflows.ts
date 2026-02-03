@@ -1,5 +1,5 @@
-import type { NotificaClient } from '../client.js';
-import type { PaginatedResponse, RequestOptions, SingleResponse } from '../types/common.js';
+import type { NotificaClient } from '../client.ts';
+import type { PaginatedResponse, RequestOptions, SingleResponse } from '../types/common.ts';
 import type {
   CreateWorkflowParams,
   ListWorkflowRunsParams,
@@ -8,10 +8,14 @@ import type {
   UpdateWorkflowParams,
   Workflow,
   WorkflowRun,
-} from '../types/workflows.js';
+} from '../types/workflows.ts';
 
 export class Workflows {
-  constructor(private readonly client: NotificaClient) {}
+  private readonly client: NotificaClient;
+
+  constructor(client: NotificaClient) {
+    this.client = client;
+  }
 
   /**
    * Cria um novo workflow.

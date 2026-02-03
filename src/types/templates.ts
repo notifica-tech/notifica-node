@@ -1,4 +1,4 @@
-import type { Channel, PaginationParams, TemplateStatus } from './common.js';
+import type { Channel, PaginationParams, TemplateStatus } from './common.ts';
 
 // ── Create / Update ─────────────────────────────────
 

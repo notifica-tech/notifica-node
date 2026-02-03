@@ -1,5 +1,5 @@
-import type { NotificaClient } from '../client.js';
-import type { PaginatedResponse, RequestOptions, SingleResponse } from '../types/common.js';
+import type { NotificaClient } from '../client.ts';
+import type { PaginatedResponse, RequestOptions, SingleResponse } from '../types/common.ts';
 import type {
   BulkImportParams,
   BulkImportResult,
@@ -12,10 +12,14 @@ import type {
   UnreadCountResult,
   UpdatePreferencesParams,
   UpdateSubscriberParams,
-} from '../types/subscribers.js';
+} from '../types/subscribers.ts';
 
 export class Subscribers {
-  constructor(private readonly client: NotificaClient) {}
+  private readonly client: NotificaClient;
+
+  constructor(client: NotificaClient) {
+    this.client = client;
+  }
 
   /**
    * Cria ou atualiza um subscriber (upsert por external_id).

@@ -1,4 +1,4 @@
-import type { PaginationParams } from './common.js';
+import type { PaginationParams } from './common.ts';
 
 // ── Create ──────────────────────────────────────────
 

@@ -1,5 +1,5 @@
-import type { NotificaClient } from '../client.js';
-import type { PaginatedResponse, RequestOptions, SingleResponse } from '../types/common.js';
+import type { NotificaClient } from '../client.ts';
+import type { PaginatedResponse, RequestOptions, SingleResponse } from '../types/common.ts';
 import type {
   CreateWebhookParams,
   ListDeliveriesParams,
@@ -7,11 +7,15 @@ import type {
   UpdateWebhookParams,
   Webhook,
   WebhookDelivery,
-} from '../types/webhooks.js';
-import { NotificaError } from '../errors.js';
+} from '../types/webhooks.ts';
+import { NotificaError } from '../errors.ts';
 
 export class Webhooks {
-  constructor(private readonly client: NotificaClient) {}
+  private readonly client: NotificaClient;
+
+  constructor(client: NotificaClient) {
+    this.client = client;
+  }
 
   /**
    * Cria um novo webhook.

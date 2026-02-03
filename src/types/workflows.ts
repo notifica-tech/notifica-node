@@ -1,4 +1,4 @@
-import type { Channel, PaginationParams } from './common.js';
+import type { Channel, PaginationParams } from './common.ts';
 
 // ── Step types ──────────────────────────────────────
 

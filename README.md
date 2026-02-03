@@ -1,8 +1,19 @@
-# @notifica/node
+<p align="center">
+  <h1 align="center">@notifica/node</h1>
+  <p align="center">SDK oficial do <a href="https://usenotifica.com.br">Notifica</a> para Node.js</p>
+  <p align="center">Infraestrutura de notificações para o Brasil 🇧🇷</p>
+</p>
 
-SDK oficial do Notifica para Node.js — infraestrutura de notificações para o Brasil.
+<p align="center">
+  <a href="https://github.com/notifica-tech/notifica-node/actions"><img src="https://github.com/notifica-tech/notifica-node/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://www.npmjs.com/package/@notifica/node"><img src="https://img.shields.io/npm/v/@notifica/node.svg" alt="npm"></a>
+  <a href="https://github.com/notifica-tech/notifica-node/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/@notifica/node.svg" alt="license"></a>
+  <a href="https://www.npmjs.com/package/@notifica/node"><img src="https://img.shields.io/npm/dm/@notifica/node.svg" alt="downloads"></a>
+</p>
 
-WhatsApp, Email, SMS, Push e In-App em uma API unificada.
+---
+
+WhatsApp, Email, SMS, Push e In-App em uma API unificada. Zero dependências. TypeScript nativo.
 
 ## Instalação
 
@@ -19,7 +30,7 @@ import { Notifica } from '@notifica/node';
 
 const notifica = new Notifica('nk_live_...');
 
-// Enviar uma notificação
+// Enviar uma notificação via WhatsApp
 const notification = await notifica.notifications.send({
   channel: 'whatsapp',
   to: '+5511999999999',
@@ -27,7 +38,7 @@ const notification = await notifica.notifications.send({
   data: { name: 'João' },
 });
 
-console.log(notification.id); // 'notif-uuid'
+console.log(notification.id);     // 'notif-uuid'
 console.log(notification.status); // 'pending'
 ```
 
@@ -41,20 +52,18 @@ const notifica = new Notifica('nk_live_...');
 const notifica = new Notifica({
   apiKey: 'nk_live_...',
   baseUrl: 'https://api.usenotifica.com.br/v1', // padrão
-  timeout: 15000,     // 15s (padrão: 30s)
-  maxRetries: 5,      // padrão: 3
+  timeout: 15000,        // 15s (padrão: 30s)
+  maxRetries: 5,         // padrão: 3
   autoIdempotency: true, // padrão: true
 });
 ```
-
-### Opções
 
 | Opção | Tipo | Padrão | Descrição |
 |-------|------|--------|-----------|
 | `apiKey` | `string` | — | **Obrigatório.** Sua API key (`nk_live_...` ou `nk_test_...`) |
 | `baseUrl` | `string` | `https://api.usenotifica.com.br/v1` | URL base da API |
 | `timeout` | `number` | `30000` | Timeout em ms |
-| `maxRetries` | `number` | `3` | Retentativas em 429/5xx |
+| `maxRetries` | `number` | `3` | Retentativas automáticas em 429/5xx |
 | `autoIdempotency` | `boolean` | `true` | Gerar chave de idempotência automática para POSTs |
 
 ---
@@ -73,14 +82,12 @@ const notification = await notifica.notifications.send({
   metadata: { source: 'signup-flow' },
 });
 
-// Listar notificações (com paginação)
+// Listar (com paginação manual)
 const { data, meta } = await notifica.notifications.list({
   channel: 'email',
   status: 'delivered',
   limit: 50,
 });
-
-// Próxima página
 const page2 = await notifica.notifications.list({ cursor: meta.cursor });
 
 // Auto-paginação com async iterator
@@ -88,17 +95,15 @@ for await (const n of notifica.notifications.listAll({ channel: 'email' })) {
   console.log(n.id, n.status);
 }
 
-// Detalhes de uma notificação
-const n = await notifica.notifications.get('notif-uuid');
-
-// Tentativas de entrega
+// Detalhes + tentativas de entrega
+const detail = await notifica.notifications.get('notif-uuid');
 const attempts = await notifica.notifications.listAttempts('notif-uuid');
 ```
 
 ### Templates — Gerenciamento
 
 ```typescript
-// Criar template
+// Criar
 const template = await notifica.templates.create({
   channel: 'email',
   slug: 'welcome-email',
@@ -111,11 +116,10 @@ const template = await notifica.templates.create({
   status: 'active',
 });
 
-// Listar
+// Listar / obter / atualizar / deletar
 const { data } = await notifica.templates.list({ channel: 'email' });
-
-// Atualizar
 await notifica.templates.update('tpl-uuid', { status: 'active' });
+await notifica.templates.delete('tpl-uuid');
 
 // Preview com variáveis
 const preview = await notifica.templates.preview('tpl-uuid', {
@@ -123,7 +127,7 @@ const preview = await notifica.templates.preview('tpl-uuid', {
 });
 console.log(preview.rendered.subject); // "Bem-vindo, João!"
 
-// Preview de conteúdo arbitrário (editor em tempo real)
+// Preview de conteúdo arbitrário (para editor em tempo real)
 const livePreview = await notifica.templates.previewContent({
   content: 'Oi {{name}}!',
   channel: 'email',
@@ -132,10 +136,7 @@ const livePreview = await notifica.templates.previewContent({
 
 // Validar template
 const validation = await notifica.templates.validate('tpl-uuid');
-console.log(validation.valid); // true
-
-// Deletar
-await notifica.templates.delete('tpl-uuid');
+console.log(validation.valid, validation.warnings);
 ```
 
 ### Workflows — Orquestração
@@ -158,20 +159,13 @@ const run = await notifica.workflows.trigger('welcome-flow', {
   data: { name: 'João', plan: 'pro' },
 });
 
-// Listar execuções
-const { data: runs } = await notifica.workflows.listRuns({
-  workflow_id: workflow.id,
-  status: 'running',
-});
-
-// Detalhes da execução (com step_results)
+// Gerenciar execuções
+const { data: runs } = await notifica.workflows.listRuns({ status: 'running' });
 const runDetail = await notifica.workflows.getRun('run-uuid');
-
-// Cancelar execução
 await notifica.workflows.cancelRun('run-uuid');
 ```
 
-#### Tipos de step
+**Tipos de step:**
 
 | Tipo | Campos | Descrição |
 |------|--------|-----------|
@@ -196,13 +190,11 @@ const subscriber = await notifica.subscribers.create({
 // Listar (com busca)
 const { data } = await notifica.subscribers.list({ search: 'joao' });
 
-// Atualizar
+// Atualizar / deletar (LGPD — nullifica PII, irreversível!)
 await notifica.subscribers.update('sub-uuid', { name: 'João S.' });
-
-// Deletar (LGPD — nullifica PII, irreversível)
 await notifica.subscribers.delete('sub-uuid');
 
-// Preferências
+// Preferências de notificação
 const prefs = await notifica.subscribers.getPreferences('sub-uuid');
 await notifica.subscribers.updatePreferences('sub-uuid', {
   preferences: [
@@ -211,122 +203,85 @@ await notifica.subscribers.updatePreferences('sub-uuid', {
   ],
 });
 
-// Import em lote (transacional)
+// Import em lote (transacional — tudo ou nada)
 const result = await notifica.subscribers.bulkImport({
   subscribers: [
     { external_id: 'user-1', email: 'a@empresa.com.br', name: 'Ana' },
     { external_id: 'user-2', email: 'b@empresa.com.br', name: 'Bruno' },
   ],
 });
-console.log(result.imported); // 2
 ```
 
-#### Notificações In-App
+**Notificações In-App:**
 
 ```typescript
-// Listar notificações in-app
-const { data } = await notifica.subscribers.listNotifications('sub-uuid', {
-  unread_only: true,
-});
-
-// Marcar como lida
+const { data } = await notifica.subscribers.listNotifications('sub-uuid', { unread_only: true });
 await notifica.subscribers.markRead('sub-uuid', 'notif-uuid');
-
-// Marcar todas como lidas
 await notifica.subscribers.markAllRead('sub-uuid');
-
-// Contagem de não lidas
 const count = await notifica.subscribers.getUnreadCount('sub-uuid');
 ```
 
 ### Channels — Configuração de canais
 
 ```typescript
-// Configurar canal
 const channel = await notifica.channels.create({
   channel: 'email',
   provider: 'aws_ses',
-  credentials: {
-    access_key_id: 'AKIA...',
-    secret_access_key: '...',
-    region: 'us-east-1',
-  },
-  settings: {
-    from_address: 'noreply@empresa.com.br',
-    from_name: 'Empresa',
-  },
+  credentials: { access_key_id: 'AKIA...', secret_access_key: '...', region: 'us-east-1' },
+  settings: { from_address: 'noreply@empresa.com.br', from_name: 'Empresa' },
 });
 
-// Listar configurações
 const channels = await notifica.channels.list();
-
-// Testar canal
 const test = await notifica.channels.test('email');
-console.log(test.success); // true
 ```
 
 ### Domains — Domínios de envio
 
 ```typescript
-// Registrar domínio
+// Registrar domínio e configurar DNS
 const domain = await notifica.domains.create({ domain: 'suaempresa.com.br' });
-// Configure os registros DNS retornados em domain.dns_records
+// → Configure os registros em domain.dns_records no seu provedor DNS
 
-// Verificar DNS
 const verified = await notifica.domains.verify(domain.id);
-console.log(verified.status); // 'verified'
-
-// Saúde do domínio
 const health = await notifica.domains.getHealth(domain.id);
-console.log(health.dns_valid, health.dkim_valid, health.spf_valid);
-
-// Alertas
 const alerts = await notifica.domains.listAlerts();
 ```
 
 ### Webhooks — Eventos outbound
 
 ```typescript
-// Criar webhook
 const webhook = await notifica.webhooks.create({
   url: 'https://meuapp.com.br/webhooks/notifica',
   events: ['notification.delivered', 'notification.failed'],
 });
 // ⚠️ Salve webhook.signing_secret — mostrado apenas na criação!
 
-// Testar webhook
 await notifica.webhooks.test(webhook.id);
-
-// Listar entregas
 const deliveries = await notifica.webhooks.listDeliveries(webhook.id);
 ```
 
-#### Verificação de assinatura
+**Verificação de assinatura:**
 
 ```typescript
-// No seu endpoint de webhook:
 app.post('/webhooks/notifica', async (req, res) => {
   const payload = req.body;       // raw body string
   const signature = req.headers['x-notifica-signature'];
   const secret = process.env.WEBHOOK_SECRET!;
 
   const valid = await notifica.webhooks.verify(payload, signature, secret);
-  if (!valid) {
-    return res.status(401).send('Assinatura inválida');
-  }
+  if (!valid) return res.status(401).send('Assinatura inválida');
 
   // Processar evento...
   res.status(200).send('OK');
 });
 
-// Ou versão que lança erro:
+// Ou a versão que lança erro automaticamente:
 await notifica.webhooks.verifyOrThrow(payload, signature, secret);
 ```
 
 ### API Keys — Gerenciamento de chaves
 
 ```typescript
-// Criar API key
 const key = await notifica.apiKeys.create({
   key_type: 'secret',
   label: 'Backend Production',
@@ -334,30 +289,16 @@ const key = await notifica.apiKeys.create({
 });
 // ⚠️ Salve key.raw_key — mostrado apenas na criação!
 
-// Listar chaves (sem raw_key)
 const keys = await notifica.apiKeys.list();
-
-// Revogar chave
 await notifica.apiKeys.revoke('key-uuid');
 ```
 
 ### Analytics — Métricas
 
 ```typescript
-// Overview
 const overview = await notifica.analytics.overview({ period: '7d' });
-console.log(`Taxa de entrega: ${overview.delivery_rate}%`);
-
-// Por canal
 const channels = await notifica.analytics.byChannel({ period: '24h' });
-
-// Série temporal
-const timeseries = await notifica.analytics.timeseries({
-  period: '7d',
-  granularity: 'day',
-});
-
-// Top templates
+const timeseries = await notifica.analytics.timeseries({ period: '7d', granularity: 'day' });
 const top = await notifica.analytics.topTemplates({ period: '30d', limit: 5 });
 ```
 
@@ -365,89 +306,72 @@ const top = await notifica.analytics.topTemplates({ period: '30d', limit: 5 });
 
 ## Tratamento de Erros
 
-O SDK lança erros tipados para diferentes cenários:
+O SDK lança erros tipados para cada cenário:
 
 ```typescript
 import {
   NotificaError,    // Erro base
-  ApiError,         // Qualquer erro da API
+  ApiError,         // Qualquer erro da API (4xx, 5xx)
   ValidationError,  // 422 — dados inválidos
   RateLimitError,   // 429 — rate limit excedido
   TimeoutError,     // Timeout de conexão
 } from '@notifica/node';
 
 try {
-  await notifica.notifications.send({ ... });
+  await notifica.notifications.send({ channel: 'email', to: 'x' });
 } catch (error) {
   if (error instanceof ValidationError) {
     console.log(error.status);     // 422
-    console.log(error.message);    // "Invalid email"
+    console.log(error.message);    // "Email inválido"
     console.log(error.details);    // { email: ["is invalid"] }
-    console.log(error.requestId);  // "req-abc-123"
+    console.log(error.requestId);  // "req-abc-123" (para suporte)
   }
-
   if (error instanceof RateLimitError) {
     console.log(error.retryAfter); // 30 (segundos)
   }
-
-  if (error instanceof TimeoutError) {
-    console.log(error.message); // "Request timed out after 30000ms"
-  }
-
   if (error instanceof ApiError) {
-    console.log(error.status);     // HTTP status code
-    console.log(error.code);       // "not_found", "unauthorized", etc.
-    console.log(error.requestId);  // ID para suporte
+    console.log(error.status, error.code);
   }
 }
 ```
 
 ## Idempotência
 
-O SDK gera automaticamente chaves de idempotência para todas as requests POST. Isso previne operações duplicadas em caso de retry.
+O SDK gera automaticamente chaves de idempotência para todas as requests POST, prevenindo operações duplicadas em caso de retry de rede.
 
 ```typescript
 // Automático (padrão)
-await notifica.notifications.send({ ... });
+await notifica.notifications.send({ channel: 'email', to: 'a@b.com' });
 
-// Chave customizada
+// Chave customizada (útil para deduplicação por lógica de negócio)
 await notifica.notifications.send(
   { channel: 'email', to: 'a@b.com' },
   { idempotencyKey: 'signup-user-123' },
 );
-
-// Desabilitar auto-idempotência
-const notifica = new Notifica({
-  apiKey: 'nk_live_...',
-  autoIdempotency: false,
-});
 ```
 
 ## Retries Automáticos
 
-O SDK retenta automaticamente em:
+Retenta automaticamente em falhas transientes:
+
 - **429** Too Many Requests — respeita header `Retry-After`
-- **5xx** Server errors — backoff exponencial (500ms, 1s, 2s + jitter)
+- **5xx** Server errors — backoff exponencial com jitter
 
 ```typescript
 const notifica = new Notifica({
   apiKey: 'nk_live_...',
-  maxRetries: 5,  // padrão: 3
+  maxRetries: 5, // padrão: 3
 });
 ```
 
 ## Paginação
-
-Duas formas de paginar:
 
 ```typescript
 // 1. Manual (cursor-based)
 let cursor: string | undefined;
 do {
   const page = await notifica.notifications.list({ cursor, limit: 100 });
-  for (const n of page.data) {
-    console.log(n.id);
-  }
+  for (const n of page.data) { console.log(n.id); }
   cursor = page.meta.has_more ? page.meta.cursor ?? undefined : undefined;
 } while (cursor);
 
@@ -459,7 +383,7 @@ for await (const n of notifica.notifications.listAll()) {
 
 ## Tipos TypeScript
 
-Todos os tipos são exportados para uso direto:
+Todos os tipos são exportados:
 
 ```typescript
 import type {
@@ -471,8 +395,37 @@ import type {
   Subscriber,
   Channel,
   NotificationStatus,
+  PaginatedResponse,
 } from '@notifica/node';
 ```
+
+---
+
+## Desenvolvimento
+
+```bash
+# Instalar dependências
+npm install
+
+# Type check
+npm run typecheck
+
+# Rodar testes (requer Node 22+)
+npm test
+
+# Build
+npm run build
+```
+
+## Contribuindo
+
+Contribuições são bem-vindas! Por favor:
+
+1. Faça fork do repositório
+2. Crie sua branch (`git checkout -b feature/minha-feature`)
+3. Commit suas mudanças (`git commit -m 'feat: minha feature'`)
+4. Push para a branch (`git push origin feature/minha-feature`)
+5. Abra um Pull Request
 
 ## Requisitos
 
@@ -484,7 +437,8 @@ import type {
 - [Documentação](https://docs.usenotifica.com.br)
 - [API Reference](https://docs.usenotifica.com.br/api-reference)
 - [Dashboard](https://app.usenotifica.com.br)
+- [GitHub](https://github.com/notifica-tech/notifica-node)
 
 ## Licença
 
-MIT
+[MIT](./LICENSE) © [Notifica](https://usenotifica.com.br)

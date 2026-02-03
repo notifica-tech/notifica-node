@@ -1,15 +1,19 @@
-import type { NotificaClient } from '../client.js';
-import type { PaginatedResponse, RequestOptions, SingleResponse } from '../types/common.js';
+import type { NotificaClient } from '../client.ts';
+import type { PaginatedResponse, RequestOptions, SingleResponse } from '../types/common.ts';
 import type {
   CreateDomainParams,
   Domain,
   DomainAlert,
   DomainHealth,
   ListDomainsParams,
-} from '../types/domains.js';
+} from '../types/domains.ts';
 
 export class Domains {
-  constructor(private readonly client: NotificaClient) {}
+  private readonly client: NotificaClient;
+
+  constructor(client: NotificaClient) {
+    this.client = client;
+  }
 
   /**
    * Registra um novo domínio de envio.

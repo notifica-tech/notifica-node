@@ -10,14 +10,14 @@ export type {
   Environment,
   ApiKeyType,
   RequestOptions,
-} from './common.js';
+} from './common.ts';
 
 export type {
   SendNotificationParams,
   Notification,
   MessageAttempt,
   ListNotificationsParams,
-} from './notifications.js';
+} from './notifications.ts';
 
 export type {
   CreateTemplateParams,
@@ -29,7 +29,7 @@ export type {
   ValidateContentParams,
   ValidationResult,
   ListTemplatesParams,
-} from './templates.js';
+} from './templates.ts';
 
 export type {
   SendStep,
@@ -45,7 +45,7 @@ export type {
   StepResult,
   ListWorkflowsParams,
   ListWorkflowRunsParams,
-} from './workflows.js';
+} from './workflows.ts';
 
 export type {
   CreateSubscriberParams,
@@ -60,14 +60,14 @@ export type {
   ListInAppParams,
   UnreadCountResult,
   ListSubscribersParams,
-} from './subscribers.js';
+} from './subscribers.ts';
 
 export type {
   CreateChannelParams,
   UpdateChannelParams,
   ChannelConfiguration,
   TestChannelResult,
-} from './channels.js';
+} from './channels.ts';
 
 export type {
   CreateDomainParams,
@@ -77,7 +77,7 @@ export type {
   DomainHealth,
   DomainAlert,
   ListDomainsParams,
-} from './domains.js';
+} from './domains.ts';
 
 export type {
   CreateWebhookParams,
@@ -86,12 +86,12 @@ export type {
   WebhookDelivery,
   ListWebhooksParams,
   ListDeliveriesParams,
-} from './webhooks.js';
+} from './webhooks.ts';
 
 export type {
   CreateApiKeyParams,
   ApiKey,
-} from './api-keys.js';
+} from './api-keys.ts';
 
 export type {
   AnalyticsPeriod,
@@ -103,4 +103,4 @@ export type {
   ChannelAnalytics,
   TimeseriesPoint,
   TemplateAnalytics,
-} from './analytics.js';
+} from './analytics.ts';

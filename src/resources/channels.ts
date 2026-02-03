@@ -1,14 +1,18 @@
-import type { NotificaClient } from '../client.js';
-import type { Channel, RequestOptions, SingleResponse } from '../types/common.js';
+import type { NotificaClient } from '../client.ts';
+import type { Channel, RequestOptions, SingleResponse } from '../types/common.ts';
 import type {
   ChannelConfiguration,
   CreateChannelParams,
   TestChannelResult,
   UpdateChannelParams,
-} from '../types/channels.js';
+} from '../types/channels.ts';
 
 export class Channels {
-  constructor(private readonly client: NotificaClient) {}
+  private readonly client: NotificaClient;
+
+  constructor(client: NotificaClient) {
+    this.client = client;
+  }
 
   /**
    * Configura um canal de notificação.

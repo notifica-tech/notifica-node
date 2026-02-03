@@ -1,5 +1,5 @@
-import type { PaginatedResponse, RequestOptions, SingleResponse } from './types/common.js';
-import { ApiError, NotificaError, RateLimitError, TimeoutError, ValidationError } from './errors.js';
+import type { PaginatedResponse, RequestOptions, SingleResponse } from './types/common.ts';
+import { ApiError, NotificaError, RateLimitError, TimeoutError, ValidationError } from './errors.ts';
 
 // ── Config ──────────────────────────────────────────
 

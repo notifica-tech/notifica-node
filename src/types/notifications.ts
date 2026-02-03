@@ -1,4 +1,4 @@
-import type { Channel, NotificationStatus, PaginationParams } from './common.js';
+import type { Channel, NotificationStatus, PaginationParams } from './common.ts';
 
 // ── Send ────────────────────────────────────────────
 

@@ -1,9 +1,13 @@
-import type { NotificaClient } from '../client.js';
-import type { RequestOptions, SingleResponse } from '../types/common.js';
-import type { ApiKey, CreateApiKeyParams } from '../types/api-keys.js';
+import type { NotificaClient } from '../client.ts';
+import type { RequestOptions, SingleResponse } from '../types/common.ts';
+import type { ApiKey, CreateApiKeyParams } from '../types/api-keys.ts';
 
 export class ApiKeys {
-  constructor(private readonly client: NotificaClient) {}
+  private readonly client: NotificaClient;
+
+  constructor(client: NotificaClient) {
+    this.client = client;
+  }
 
   /**
    * Cria uma nova API key.

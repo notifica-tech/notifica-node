@@ -1,4 +1,4 @@
-import type { Channel } from './common.js';
+import type { Channel } from './common.ts';
 
 // ── Create / Update ─────────────────────────────────
 
