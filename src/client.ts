@@ -6,7 +6,7 @@ import { ApiError, NotificaError, RateLimitError, TimeoutError, ValidationError 
 export interface NotificaClientConfig {
   /** API key (nk_live_..., nk_test_..., pk_live_..., pk_test_...) */
   apiKey: string;
-  /** Base URL da API (default: https://api.usenotifica.com.br/v1) */
+  /** Base URL da API (default: https://app.usenotifica.com.br/v1) */
   baseUrl?: string;
   /** Timeout padrão em ms (default: 30000) */
   timeout?: number;
@@ -16,7 +16,7 @@ export interface NotificaClientConfig {
   autoIdempotency?: boolean;
 }
 
-const DEFAULT_BASE_URL = 'https://api.usenotifica.com.br/v1';
+const DEFAULT_BASE_URL = 'https://app.usenotifica.com.br/v1';
 const DEFAULT_TIMEOUT = 30_000;
 const DEFAULT_MAX_RETRIES = 3;
 

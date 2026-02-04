@@ -27,7 +27,7 @@ describe('NotificaClient constructor', () => {
     mock = mockFetch({ status: 200, body: {} });
     const client = new NotificaClient({ apiKey: 'nk_test_x' });
     client.get('/test');
-    assert.ok(mock.requests[0].url.startsWith('https://api.usenotifica.com.br/v1'));
+    assert.ok(mock.requests[0].url.startsWith('https://app.usenotifica.com.br/v1'));
   });
 });
 

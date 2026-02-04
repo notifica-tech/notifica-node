@@ -65,7 +65,7 @@ export class Notifica {
    * // Configuração completa
    * const notifica = new Notifica({
    *   apiKey: 'nk_live_...',
-   *   baseUrl: 'https://api.usenotifica.com.br/v1',
+   *   baseUrl: 'https://app.usenotifica.com.br/v1',
    *   timeout: 15000,
    *   maxRetries: 5,
    * });

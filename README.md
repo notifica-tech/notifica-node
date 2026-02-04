@@ -51,7 +51,7 @@ const notifica = new Notifica('nk_live_...');
 // Configuração completa
 const notifica = new Notifica({
   apiKey: 'nk_live_...',
-  baseUrl: 'https://api.usenotifica.com.br/v1', // padrão
+  baseUrl: 'https://app.usenotifica.com.br/v1', // padrão
   timeout: 15000,        // 15s (padrão: 30s)
   maxRetries: 5,         // padrão: 3
   autoIdempotency: true, // padrão: true
@@ -61,7 +61,7 @@ const notifica = new Notifica({
 | Opção | Tipo | Padrão | Descrição |
 |-------|------|--------|-----------|
 | `apiKey` | `string` | — | **Obrigatório.** Sua API key (`nk_live_...` ou `nk_test_...`) |
-| `baseUrl` | `string` | `https://api.usenotifica.com.br/v1` | URL base da API |
+| `baseUrl` | `string` | `https://app.usenotifica.com.br/v1` | URL base da API |
 | `timeout` | `number` | `30000` | Timeout em ms |
 | `maxRetries` | `number` | `3` | Retentativas automáticas em 429/5xx |
 | `autoIdempotency` | `boolean` | `true` | Gerar chave de idempotência automática para POSTs |
