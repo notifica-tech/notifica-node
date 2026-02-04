@@ -30,7 +30,7 @@
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts --clean",
     "typecheck": "tsc --noEmit",
-    "test": "node --experimental-strip-types --no-warnings --test test/client.test.ts test/resources/notifications.test.ts test/resources/templates.test.ts test/resources/workflows.test.ts test/resources/subscribers.test.ts test/resources/channels.test.ts test/resources/domains.test.ts test/resources/webhooks.test.ts test/resources/api-keys.test.ts test/resources/analytics.test.ts",
+    "test": "node --experimental-strip-types --no-warnings --test test/client.test.ts test/resources/notifications.test.ts test/resources/templates.test.ts test/resources/workflows.test.ts test/resources/subscribers.test.ts test/resources/channels.test.ts test/resources/domains.test.ts test/resources/webhooks.test.ts test/resources/api-keys.test.ts test/resources/analytics.test.ts test/resources/sms.test.ts test/resources/billing.test.ts test/resources/inbox-embed.test.ts test/resources/inbox.test.ts",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {

@@ -8,6 +8,10 @@ import { Domains } from './resources/domains.ts';
 import { Webhooks } from './resources/webhooks.ts';
 import { ApiKeys } from './resources/api-keys.ts';
 import { Analytics } from './resources/analytics.ts';
+import { Sms } from './resources/sms.ts';
+import { Billing } from './resources/billing.ts';
+import { InboxEmbed } from './resources/inbox-embed.ts';
+import { Inbox } from './resources/inbox.ts';
 
 /**
  * Cliente oficial do Notifica para Node.js.
@@ -43,6 +47,10 @@ export class Notifica {
   readonly webhooks: Webhooks;
   readonly apiKeys: ApiKeys;
   readonly analytics: Analytics;
+  readonly sms: Sms;
+  readonly billing: Billing;
+  readonly inboxEmbed: InboxEmbed;
+  readonly inbox: Inbox;
 
   /**
    * Cria uma nova instância do cliente Notifica.
@@ -80,6 +88,10 @@ export class Notifica {
     this.webhooks = new Webhooks(client);
     this.apiKeys = new ApiKeys(client);
     this.analytics = new Analytics(client);
+    this.sms = new Sms(client);
+    this.billing = new Billing(client);
+    this.inboxEmbed = new InboxEmbed(client);
+    this.inbox = new Inbox(client);
   }
 }
 
@@ -107,3 +119,7 @@ export { Domains } from './resources/domains.ts';
 export { Webhooks } from './resources/webhooks.ts';
 export { ApiKeys } from './resources/api-keys.ts';
 export { Analytics } from './resources/analytics.ts';
+export { Sms } from './resources/sms.ts';
+export { Billing } from './resources/billing.ts';
+export { InboxEmbed } from './resources/inbox-embed.ts';
+export { Inbox } from './resources/inbox.ts';
