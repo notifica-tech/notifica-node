@@ -59,6 +59,10 @@ export class NotificaClient {
     return this.request<T>('PUT', path, body, undefined, options);
   }
 
+  async patch<T>(path: string, body?: unknown, options?: RequestOptions): Promise<T> {
+    return this.request<T>('PATCH', path, body, undefined, options);
+  }
+
   async delete<T = void>(path: string, options?: RequestOptions): Promise<T> {
     return this.request<T>('DELETE', path, undefined, undefined, options);
   }
