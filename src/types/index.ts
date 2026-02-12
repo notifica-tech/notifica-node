@@ -178,3 +178,12 @@ export type {
   MarkInboxReadResult,
   MarkInboxReadAllResult,
 } from './inbox.ts';
+
+export type {
+  AuditLogAction,
+  AuditResourceType,
+  AuditActorType,
+  AuditActor,
+  AuditLog,
+  ListAuditLogsParams,
+} from './audit.ts';

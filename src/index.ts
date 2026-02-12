@@ -12,6 +12,7 @@ import { Sms } from './resources/sms.ts';
 import { Billing } from './resources/billing.ts';
 import { InboxEmbed } from './resources/inbox-embed.ts';
 import { Inbox } from './resources/inbox.ts';
+import { Audit } from './resources/audit.ts';
 
 /**
  * Cliente oficial do Notifica para Node.js.
@@ -51,6 +52,8 @@ export class Notifica {
   readonly billing: Billing;
   readonly inboxEmbed: InboxEmbed;
   readonly inbox: Inbox;
+  /** ⚠️ Admin Only: Requires admin authentication (Bearer token from backoffice) */
+  readonly audit: Audit;
 
   /**
    * Cria uma nova instância do cliente Notifica.
@@ -92,6 +95,7 @@ export class Notifica {
     this.billing = new Billing(client);
     this.inboxEmbed = new InboxEmbed(client);
     this.inbox = new Inbox(client);
+    this.audit = new Audit(client);
   }
 }
 
@@ -123,3 +127,4 @@ export { Sms } from './resources/sms.ts';
 export { Billing } from './resources/billing.ts';
 export { InboxEmbed } from './resources/inbox-embed.ts';
 export { Inbox } from './resources/inbox.ts';
+export { Audit } from './resources/audit.ts';
